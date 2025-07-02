@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,10 +12,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome!"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="#333333"
         android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/buttonChoosePet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose a Pet"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonCheckStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check Pet Status"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonAddActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Activity"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonShop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shop"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/buttonHistory"
+        android:text="View History"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/logoutButton"

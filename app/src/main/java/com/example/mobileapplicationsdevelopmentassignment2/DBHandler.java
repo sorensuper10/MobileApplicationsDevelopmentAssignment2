@@ -12,6 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -106,5 +109,61 @@ public class DBHandler extends SQLiteOpenHelper {
     public Cursor getAllActivities() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+    }
+
+    // Update an activity by ID
+    public boolean updateActivity(int id, int newSteps, int newWater) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(STEPS_COL, newSteps);
+        values.put(WATER_COL, newWater);
+
+        int rowsAffected = db.update(TABLE_NAME, values, ID_COL + "=?", new String[]{String.valueOf(id)});
+        return rowsAffected > 0;
+    }
+
+    // Delete an activity by ID
+    public boolean deleteActivity(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE_NAME, ID_COL + "=?", new String[]{String.valueOf(id)});
+        return rowsDeleted > 0;
+    }
+
+    // Get total steps for today
+    public int getTodayTotalSteps() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int totalSteps = 0;
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(" + STEPS_COL + ") FROM " + TABLE_NAME + " WHERE " + DATE_COL + " = ?",
+                new String[]{today}
+        );
+
+        if (cursor.moveToFirst()) {
+            totalSteps = cursor.getInt(0);
+        }
+
+        cursor.close();
+        return totalSteps;
+    }
+
+    // Get total water intake for today
+    public int getTodayTotalWater() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int totalWater = 0;
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        Cursor cursor = db.rawQuery(
+                "SELECT SUM(" + WATER_COL + ") FROM " + TABLE_NAME + " WHERE " + DATE_COL + " = ?",
+                new String[]{today}
+        );
+
+        if (cursor.moveToFirst()) {
+            totalWater = cursor.getInt(0);
+        }
+
+        cursor.close();
+        return totalWater;
     }
 }

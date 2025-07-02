@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HomeActivity extends AppCompatActivity {
 
     TextView welcomeText;
-    Button logoutButton;
+    Button buttonChoosePet, buttonCheckStatus, buttonAddActivity, buttonShop, buttonLogout, buttonHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,19 +18,45 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         welcomeText = findViewById(R.id.welcomeText);
-        logoutButton = findViewById(R.id.logoutButton);
+        buttonChoosePet = findViewById(R.id.buttonChoosePet);
+        buttonCheckStatus = findViewById(R.id.buttonCheckStatus);
+        buttonAddActivity = findViewById(R.id.buttonAddActivity);
+        buttonShop = findViewById(R.id.buttonShop);
+        buttonLogout = findViewById(R.id.logoutButton);
+        buttonHistory = findViewById(R.id.buttonHistory);
 
-        // Get the username passed from LoginActivity
+
+        // Get username
         String username = getIntent().getStringExtra("username");
-
         if (username != null && !username.isEmpty()) {
             welcomeText.setText("Welcome, " + username + "!");
         } else {
             welcomeText.setText("Welcome!");
         }
 
-        // Handle logout
-        logoutButton.setOnClickListener(v -> {
+        // Intents for each button
+        buttonChoosePet.setOnClickListener(v ->
+                startActivity(new Intent(this, ChoosePetActivity.class))
+        );
+
+        buttonCheckStatus.setOnClickListener(v ->
+                startActivity(new Intent(this, CheckStatusActivity.class))
+        );
+
+        buttonAddActivity.setOnClickListener(v ->
+                startActivity(new Intent(this, AddActivityActivity.class))
+        );
+
+        buttonShop.setOnClickListener(v ->
+                startActivity(new Intent(this, ShopActivity.class))
+        );
+
+        buttonHistory.setOnClickListener(v ->
+                startActivity(new Intent(this, HistoryActivity.class))
+        );
+
+        // Logout
+        buttonLogout.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

@@ -28,6 +28,14 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".ChoosePetActivity" />
+        <activity android:name=".CheckStatusActivity" />
+        <activity android:name=".AddActivityActivity" />
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".UpdateActivity" />
+        <activity android:name=".InventoryActivity" />
+        <activity android:name=".AddCoinsActivity" />
 
     </application>
 
