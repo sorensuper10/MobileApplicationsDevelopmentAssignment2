@@ -12,8 +12,8 @@ public class ChoosePetActivity extends AppCompatActivity {
 
     private RadioGroup petOptions;
     private Button buttonConfirm, buttonBack;
+    private String username;
 
-    public static final String PREF_NAME = "PetPrefs";
     public static final String KEY_SELECTED_PET = "selected_pet";
 
     @Override
@@ -24,6 +24,8 @@ public class ChoosePetActivity extends AppCompatActivity {
         petOptions = findViewById(R.id.petOptions);
         buttonConfirm = findViewById(R.id.buttonConfirmPet);
         buttonBack = findViewById(R.id.buttonBack);
+
+        username = getIntent().getStringExtra("username");  // ✅ Get username
 
         buttonConfirm.setOnClickListener(v -> {
             int selectedId = petOptions.getCheckedRadioButtonId();
@@ -36,8 +38,8 @@ public class ChoosePetActivity extends AppCompatActivity {
             RadioButton selectedRadio = findViewById(selectedId);
             String petName = selectedRadio.getText().toString();
 
-            // Save to SharedPreferences
-            SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            // Save to per-user SharedPreferences
+            SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString(KEY_SELECTED_PET, petName);
             editor.apply();

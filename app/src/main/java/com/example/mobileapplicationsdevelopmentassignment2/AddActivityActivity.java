@@ -25,8 +25,10 @@ public class AddActivityActivity extends AppCompatActivity {
         editSteps = findViewById(R.id.editSteps);
         editWater = findViewById(R.id.editWater);
         buttonSave = findViewById(R.id.buttonSaveActivity);
-        buttonBack = findViewById(R.id.buttonBack); // 👈 Connect the Back button
+        buttonBack = findViewById(R.id.buttonBack);
         db = new DBHandler(this);
+
+        String username = getIntent().getStringExtra("username");
 
         buttonSave.setOnClickListener(v -> {
             String stepsStr = editSteps.getText().toString().trim();
@@ -41,11 +43,10 @@ public class AddActivityActivity extends AppCompatActivity {
             int water = Integer.parseInt(waterStr);
             String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-            db.addActivity(currentDate, steps, water);
+            db.addActivity(username, currentDate, steps, water);
             Toast.makeText(this, "Activity saved!", Toast.LENGTH_SHORT).show();
-            finish(); // Go back to previous screen
+            finish();
         });
-
 
         buttonBack.setOnClickListener(v -> finish());
     }

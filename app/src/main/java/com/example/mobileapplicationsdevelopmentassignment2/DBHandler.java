@@ -23,6 +23,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "UserActivity";
 
     private static final String ID_COL = "id";
+    private static final String USERNAME_COL = "username"; // ✅ New column for per-user storage
     private static final String DATE_COL = "date";
     private static final String STEPS_COL = "steps";
     private static final String WATER_COL = "water_intake";
@@ -37,7 +38,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Using prebuilt DB — no schema creation needed
+        // Prebuilt DB — no schema creation here
     }
 
     @Override
@@ -45,10 +46,9 @@ public class DBHandler extends SQLiteOpenHelper {
         // Not required for prebuilt DB
     }
 
-    // Copy database from assets folder to app's DB path if not already present
+    // Copy prebuilt DB from assets
     public void copyDatabaseIfNeeded(Context context) {
         File dbFile = context.getDatabasePath(DB_NAME);
-
         if (dbFile.exists()) {
             Log.d("DBHandler", "Database already exists, no need to copy.");
             return;
@@ -70,7 +70,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
-    // Register a new user
+    // Register user
     public boolean registerUser(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -81,7 +81,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    // Check login credentials
+    // Login check
     public boolean checkLogin(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(
@@ -93,10 +93,11 @@ public class DBHandler extends SQLiteOpenHelper {
         return exists;
     }
 
-    // Add user activity
-    public void addActivity(String date, int steps, int waterIntake) {
+    // Add user activity (per-user)
+    public void addActivity(String username, String date, int steps, int waterIntake) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(USERNAME_COL, username);
         values.put(DATE_COL, date);
         values.put(STEPS_COL, steps);
         values.put(WATER_COL, waterIntake);
@@ -105,10 +106,10 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Get all activity logs
-    public Cursor getAllActivities() {
+    // Get all activities for a user
+    public Cursor getAllActivities(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + USERNAME_COL + " = ?", new String[]{username});
     }
 
     // Update an activity by ID
@@ -129,15 +130,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return rowsDeleted > 0;
     }
 
-    // Get total steps for today
-    public int getTodayTotalSteps() {
+    // Get today's total steps (per-user)
+    public int getTodayTotalSteps(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         int totalSteps = 0;
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         Cursor cursor = db.rawQuery(
-                "SELECT SUM(" + STEPS_COL + ") FROM " + TABLE_NAME + " WHERE " + DATE_COL + " = ?",
-                new String[]{today}
+                "SELECT SUM(" + STEPS_COL + ") FROM " + TABLE_NAME +
+                        " WHERE " + DATE_COL + " = ? AND " + USERNAME_COL + " = ?",
+                new String[]{today, username}
         );
 
         if (cursor.moveToFirst()) {
@@ -148,15 +150,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return totalSteps;
     }
 
-    // Get total water intake for today
-    public int getTodayTotalWater() {
+    // Get today's total water intake (per-user)
+    public int getTodayTotalWater(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         int totalWater = 0;
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         Cursor cursor = db.rawQuery(
-                "SELECT SUM(" + WATER_COL + ") FROM " + TABLE_NAME + " WHERE " + DATE_COL + " = ?",
-                new String[]{today}
+                "SELECT SUM(" + WATER_COL + ") FROM " + TABLE_NAME +
+                        " WHERE " + DATE_COL + " = ? AND " + USERNAME_COL + " = ?",
+                new String[]{today, username}
         );
 
         if (cursor.moveToFirst()) {

@@ -10,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class InventoryActivity extends AppCompatActivity {
 
-    public static final String PREF_NAME = "PetPrefs";
     private static final String KEY_INVENTORY = "inventory";
-
     private LinearLayout inventoryContainer;
     private Button buttonBack, buttonClearInventory;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,29 +24,28 @@ public class InventoryActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.buttonBack);
         buttonClearInventory = findViewById(R.id.buttonClearInventory);
 
-        // Load and display inventory
+        username = getIntent().getStringExtra("username");  // ✅ Get username
+
+        // Load and display inventory (per user)
         displayInventory();
 
-        // Back button
         buttonBack.setOnClickListener(v -> finish());
 
-        // Clear inventory button
         buttonClearInventory.setOnClickListener(v -> {
-            SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.remove(KEY_INVENTORY);
             editor.apply();
 
             Toast.makeText(this, "Inventory cleared", Toast.LENGTH_SHORT).show();
 
-            // Refresh screen
-            recreate();
+            recreate();  // Refresh screen
         });
     }
 
     private void displayInventory() {
         inventoryContainer.removeAllViews();
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);
         String inventory = prefs.getString(KEY_INVENTORY, "");
 
         if (!inventory.isEmpty()) {

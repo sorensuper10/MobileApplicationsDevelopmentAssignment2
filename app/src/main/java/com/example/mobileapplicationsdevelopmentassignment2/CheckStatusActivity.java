@@ -16,7 +16,6 @@ public class CheckStatusActivity extends AppCompatActivity {
     Button buttonBack;
     DBHandler db;
 
-    public static final String PREF_NAME = "PetPrefs";
     public static final String KEY_SELECTED_PET = "selected_pet";
     public static final String KEY_POINTS = "total_points";
     public static final String KEY_LAST_REWARDED_DATE = "last_rewarded";
@@ -26,7 +25,6 @@ public class CheckStatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_status);
 
-        // Bind UI
         statusSteps = findViewById(R.id.statusSteps);
         statusWater = findViewById(R.id.statusWater);
         statusMood = findViewById(R.id.statusMood);
@@ -34,19 +32,19 @@ public class CheckStatusActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.buttonBack);
         db = new DBHandler(this);
 
-        // Load SharedPreferences
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String username = getIntent().getStringExtra("username");  // ✅ Get username
+
+        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);  // ✅ Per-user preferences
         SharedPreferences.Editor editor = prefs.edit();
 
-        // Get selected pet
+        // Pet
         String selectedPet = prefs.getString(KEY_SELECTED_PET, "None");
         statusPet.setText("Your Pet: " + selectedPet);
 
-        // Get today’s totals
-        int totalSteps = db.getTodayTotalSteps();
-        int totalWater = db.getTodayTotalWater();
+        // Today's totals (per user)
+        int totalSteps = db.getTodayTotalSteps(username);
+        int totalWater = db.getTodayTotalWater(username);
 
-        // Show status
         if (totalSteps > 0 || totalWater > 0) {
             statusSteps.setText("Steps: " + totalSteps + " / 10000");
             statusWater.setText("Water Intake: " + totalWater + "ml / 3000ml");
@@ -66,7 +64,7 @@ public class CheckStatusActivity extends AppCompatActivity {
             statusMood.setText("Mood: Unknown");
         }
 
-        // Reward logic (once per day)
+        // Reward logic (per user)
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String lastRewarded = prefs.getString(KEY_LAST_REWARDED_DATE, "");
 
@@ -85,7 +83,6 @@ public class CheckStatusActivity extends AppCompatActivity {
             }
         }
 
-        // Back button
         buttonBack.setOnClickListener(v -> finish());
     }
 }

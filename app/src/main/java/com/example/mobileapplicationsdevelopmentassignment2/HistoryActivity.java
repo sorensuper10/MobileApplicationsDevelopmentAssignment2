@@ -11,6 +11,7 @@ public class HistoryActivity extends AppCompatActivity {
     DBHandler dbHandler;
     LinearLayout historyContainer;
     Button buttonBack;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,35 +22,33 @@ public class HistoryActivity extends AppCompatActivity {
         historyContainer = findViewById(R.id.historyContainer);
         buttonBack = findViewById(R.id.buttonBack);
 
+        username = getIntent().getStringExtra("username");  // ✅ Receive username
+
         // Optional: Show top-left back arrow
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // Physical back button in layout
         buttonBack.setOnClickListener(v -> finish());
 
         loadHistory();
     }
 
-    // Refresh on resume
     @Override
     protected void onResume() {
         super.onResume();
         loadHistory();
     }
 
-    // Handle Action Bar back arrow
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
-    // Load and display activity logs with update/delete buttons
     private void loadHistory() {
         historyContainer.removeAllViews();
-        Cursor cursor = dbHandler.getAllActivities();
+        Cursor cursor = dbHandler.getAllActivities(username);  // ✅ Pass username
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -58,7 +57,6 @@ public class HistoryActivity extends AppCompatActivity {
                 int steps = cursor.getInt(cursor.getColumnIndexOrThrow("steps"));
                 int water = cursor.getInt(cursor.getColumnIndexOrThrow("water_intake"));
 
-                // Container for one entry
                 LinearLayout entryLayout = new LinearLayout(this);
                 entryLayout.setOrientation(LinearLayout.VERTICAL);
                 entryLayout.setPadding(0, 0, 0, 40);
@@ -74,6 +72,7 @@ public class HistoryActivity extends AppCompatActivity {
                     intent.putExtra("id", id);
                     intent.putExtra("steps", steps);
                     intent.putExtra("water", water);
+                    intent.putExtra("username", username);  // ✅ Pass username if needed
                     startActivity(intent);
                 });
 

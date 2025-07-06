@@ -25,7 +25,6 @@ public class HomeActivity extends AppCompatActivity {
         buttonLogout = findViewById(R.id.logoutButton);
         buttonHistory = findViewById(R.id.buttonHistory);
 
-
         // Get username
         String username = getIntent().getStringExtra("username");
         if (username != null && !username.isEmpty()) {
@@ -34,26 +33,36 @@ public class HomeActivity extends AppCompatActivity {
             welcomeText.setText("Welcome!");
         }
 
-        // Intents for each button
-        buttonChoosePet.setOnClickListener(v ->
-                startActivity(new Intent(this, ChoosePetActivity.class))
-        );
+        // Pass username to other activities:
+        buttonChoosePet.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChoosePetActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
-        buttonCheckStatus.setOnClickListener(v ->
-                startActivity(new Intent(this, CheckStatusActivity.class))
-        );
+        buttonCheckStatus.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CheckStatusActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
-        buttonAddActivity.setOnClickListener(v ->
-                startActivity(new Intent(this, AddActivityActivity.class))
-        );
+        buttonAddActivity.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddActivityActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
-        buttonShop.setOnClickListener(v ->
-                startActivity(new Intent(this, ShopActivity.class))
-        );
+        buttonShop.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ShopActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
-        buttonHistory.setOnClickListener(v ->
-                startActivity(new Intent(this, HistoryActivity.class))
-        );
+        buttonHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HistoryActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
         // Logout
         buttonLogout.setOnClickListener(v -> {

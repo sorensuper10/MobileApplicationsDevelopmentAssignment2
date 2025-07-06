@@ -2,7 +2,6 @@ package com.example.mobileapplicationsdevelopmentassignment2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +11,7 @@ public class UpdateActivity extends AppCompatActivity {
     Button buttonUpdate, buttonCancel;
     DBHandler dbHandler;
     int activityId;
+    String username;  // ✅ New: username variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class UpdateActivity extends AppCompatActivity {
         activityId = intent.getIntExtra("id", -1);
         int currentSteps = intent.getIntExtra("steps", 0);
         int currentWater = intent.getIntExtra("water", 0);
+        username = intent.getStringExtra("username");  // ✅ Receive username
 
         inputSteps.setText(String.valueOf(currentSteps));
         inputWater.setText(String.valueOf(currentWater));
@@ -39,7 +40,7 @@ public class UpdateActivity extends AppCompatActivity {
             boolean success = dbHandler.updateActivity(activityId, newSteps, newWater);
             Toast.makeText(this, success ? "Activity updated" : "Update failed", Toast.LENGTH_SHORT).show();
 
-            finish(); // go back to history
+            finish();  // Go back to HistoryActivity
         });
 
         buttonCancel.setOnClickListener(v -> finish());
