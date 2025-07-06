@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonShop = findViewById(R.id.buttonShop);
         buttonLogout = findViewById(R.id.logoutButton);
         buttonHistory = findViewById(R.id.buttonHistory);
+        Button buttonProfile = findViewById(R.id.buttonProfile);
 
         // Get username
         String username = getIntent().getStringExtra("username");
@@ -60,6 +61,12 @@ public class HomeActivity extends AppCompatActivity {
 
         buttonHistory.setOnClickListener(v -> {
             Intent intent = new Intent(this, HistoryActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
+
+        buttonProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProfileActivity.class);
             intent.putExtra("username", username);
             startActivity(intent);
         });

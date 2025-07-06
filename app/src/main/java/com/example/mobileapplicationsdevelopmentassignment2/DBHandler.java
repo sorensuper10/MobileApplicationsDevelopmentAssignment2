@@ -49,10 +49,28 @@ public class DBHandler extends SQLiteOpenHelper {
     // Copy prebuilt DB from assets
     public void copyDatabaseIfNeeded(Context context) {
         File dbFile = context.getDatabasePath(DB_NAME);
+
+        // Delete old database to force fresh copy (DEV ONLY!)
         if (dbFile.exists()) {
-            Log.d("DBHandler", "Database already exists, no need to copy.");
-            return;
+            dbFile.delete();
+            Log.d("DBHandler", "Old database deleted for fresh copy (DEV ONLY).");
         }
+
+        try (InputStream input = context.getAssets().open(DB_NAME);
+             OutputStream output = new FileOutputStream(dbFile)) {
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = input.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+
+            output.flush();
+            Log.d("DBHandler", "Database copied from assets.");
+        } catch (IOException e) {
+            Log.e("DBHandler", "Failed to copy database: " + e.getMessage());
+        }
+
 
         try (InputStream input = context.getAssets().open(DB_NAME);
              OutputStream output = new FileOutputStream(dbFile)) {
