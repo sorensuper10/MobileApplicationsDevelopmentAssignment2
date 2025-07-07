@@ -22,7 +22,7 @@ public class HistoryActivity extends AppCompatActivity {
         historyContainer = findViewById(R.id.historyContainer);
         buttonBack = findViewById(R.id.buttonBack);
 
-        username = getIntent().getStringExtra("username");  // ✅ Receive username
+        username = getIntent().getStringExtra("username");
 
         // Optional: Show top-left back arrow
         if (getSupportActionBar() != null) {
@@ -48,7 +48,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void loadHistory() {
         historyContainer.removeAllViews();
-        Cursor cursor = dbHandler.getAllActivities(username);  // ✅ Pass username
+        Cursor cursor = dbHandler.getAllActivities(username);
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -72,7 +72,7 @@ public class HistoryActivity extends AppCompatActivity {
                     intent.putExtra("id", id);
                     intent.putExtra("steps", steps);
                     intent.putExtra("water", water);
-                    intent.putExtra("username", username);  // ✅ Pass username if needed
+                    intent.putExtra("username", username);
                     startActivity(intent);
                 });
 

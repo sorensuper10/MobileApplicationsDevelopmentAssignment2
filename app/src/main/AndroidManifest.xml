@@ -36,6 +36,9 @@
         <activity android:name=".UpdateActivity" />
         <activity android:name=".InventoryActivity" />
         <activity android:name=".AddCoinsActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".EditProfileActivity" />
+
 
     </application>
 

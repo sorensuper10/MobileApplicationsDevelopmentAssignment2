@@ -21,7 +21,7 @@ public class ShopActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
 
-        username = getIntent().getStringExtra("username");  // ✅ Get username from Intent
+        username = getIntent().getStringExtra("username");
 
         textPoints = findViewById(R.id.textPoints);
         Button buttonBack = findViewById(R.id.buttonBack);
@@ -33,7 +33,7 @@ public class ShopActivity extends AppCompatActivity {
         Button energyDrinkButton = findViewById(R.id.button2);
         Button petTreatButton = findViewById(R.id.button3);
 
-        // ✅ Fixed: Go back to HomeActivity with username
+
         buttonBack.setOnClickListener(v -> {
             Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("username", username);
@@ -41,14 +41,14 @@ public class ShopActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // ✅ Pass username to AddCoinsActivity
+
         buttonAddCoins.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddCoinsActivity.class);
             intent.putExtra("username", username);
             startActivity(intent);
         });
 
-        // ✅ Pass username to InventoryActivity
+
         buttonViewInventory.setOnClickListener(v -> {
             Intent intent = new Intent(this, InventoryActivity.class);
             intent.putExtra("username", username);
@@ -70,13 +70,13 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void updatePointsDisplay() {
-        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);  // ✅ Per-user prefs
+        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);
         int points = prefs.getInt(KEY_POINTS, 0);
         textPoints.setText("Points: " + points);
     }
 
     private void handlePurchase(String itemName, int cost) {
-        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);  // ✅ Per-user prefs
+        SharedPreferences prefs = getSharedPreferences(username + "_Prefs", MODE_PRIVATE);
         int currentPoints = prefs.getInt(KEY_POINTS, 0);
 
         if (currentPoints >= cost) {

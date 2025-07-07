@@ -25,7 +25,7 @@ public class ChoosePetActivity extends AppCompatActivity {
         buttonConfirm = findViewById(R.id.buttonConfirmPet);
         buttonBack = findViewById(R.id.buttonBack);
 
-        username = getIntent().getStringExtra("username");  // ✅ Get username
+        username = getIntent().getStringExtra("username");
 
         buttonConfirm.setOnClickListener(v -> {
             int selectedId = petOptions.getCheckedRadioButtonId();

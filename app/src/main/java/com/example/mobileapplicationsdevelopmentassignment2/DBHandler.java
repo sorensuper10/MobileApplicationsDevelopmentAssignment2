@@ -23,7 +23,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "UserActivity";
 
     private static final String ID_COL = "id";
-    private static final String USERNAME_COL = "username"; // ✅ New column for per-user storage
+    private static final String USERNAME_COL = "username";
     private static final String DATE_COL = "date";
     private static final String STEPS_COL = "steps";
     private static final String WATER_COL = "water_intake";
@@ -50,43 +50,26 @@ public class DBHandler extends SQLiteOpenHelper {
     public void copyDatabaseIfNeeded(Context context) {
         File dbFile = context.getDatabasePath(DB_NAME);
 
-        // Delete old database to force fresh copy (DEV ONLY!)
-        if (dbFile.exists()) {
-            dbFile.delete();
-            Log.d("DBHandler", "Old database deleted for fresh copy (DEV ONLY).");
-        }
+        if (!dbFile.exists()) {
+            try (InputStream input = context.getAssets().open(DB_NAME);
+                 OutputStream output = new FileOutputStream(dbFile)) {
 
-        try (InputStream input = context.getAssets().open(DB_NAME);
-             OutputStream output = new FileOutputStream(dbFile)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = input.read(buffer)) > 0) {
+                    output.write(buffer, 0, length);
+                }
 
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = input.read(buffer)) > 0) {
-                output.write(buffer, 0, length);
+                output.flush();
+                Log.d("DBHandler", "Database copied from assets.");
+            } catch (IOException e) {
+                Log.e("DBHandler", "Failed to copy database: " + e.getMessage());
             }
-
-            output.flush();
-            Log.d("DBHandler", "Database copied from assets.");
-        } catch (IOException e) {
-            Log.e("DBHandler", "Failed to copy database: " + e.getMessage());
-        }
-
-
-        try (InputStream input = context.getAssets().open(DB_NAME);
-             OutputStream output = new FileOutputStream(dbFile)) {
-
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = input.read(buffer)) > 0) {
-                output.write(buffer, 0, length);
-            }
-
-            output.flush();
-            Log.d("DBHandler", "Database copied from assets.");
-        } catch (IOException e) {
-            Log.e("DBHandler", "Failed to copy database: " + e.getMessage());
+        } else {
+            Log.d("DBHandler", "Database already exists, no need to copy.");
         }
     }
+
 
     // Register user
     public boolean registerUser(String username, String password) {

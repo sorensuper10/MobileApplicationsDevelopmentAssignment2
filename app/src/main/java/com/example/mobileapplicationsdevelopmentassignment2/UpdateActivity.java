@@ -11,7 +11,7 @@ public class UpdateActivity extends AppCompatActivity {
     Button buttonUpdate, buttonCancel;
     DBHandler dbHandler;
     int activityId;
-    String username;  // ✅ New: username variable
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class UpdateActivity extends AppCompatActivity {
         activityId = intent.getIntExtra("id", -1);
         int currentSteps = intent.getIntExtra("steps", 0);
         int currentWater = intent.getIntExtra("water", 0);
-        username = intent.getStringExtra("username");  // ✅ Receive username
+        username = intent.getStringExtra("username");
 
         inputSteps.setText(String.valueOf(currentSteps));
         inputWater.setText(String.valueOf(currentWater));

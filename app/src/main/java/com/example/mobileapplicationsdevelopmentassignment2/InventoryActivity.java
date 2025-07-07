@@ -24,7 +24,7 @@ public class InventoryActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.buttonBack);
         buttonClearInventory = findViewById(R.id.buttonClearInventory);
 
-        username = getIntent().getStringExtra("username");  // ✅ Get username
+        username = getIntent().getStringExtra("username");
 
         // Load and display inventory (per user)
         displayInventory();
