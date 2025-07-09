@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.util.Locale;
 public class CheckStatusActivity extends AppCompatActivity {
 
     TextView statusSteps, statusWater, statusMood, statusPet;
+    ImageView petImage;
     Button buttonBack;
     DBHandler db;
 
@@ -33,6 +35,7 @@ public class CheckStatusActivity extends AppCompatActivity {
         statusWater = findViewById(R.id.statusWater);
         statusMood = findViewById(R.id.statusMood);
         statusPet = findViewById(R.id.statusPet);
+        petImage = findViewById(R.id.statusPetImage);
         buttonBack = findViewById(R.id.buttonBack);
         db = new DBHandler(this);
 
@@ -119,6 +122,31 @@ public class CheckStatusActivity extends AppCompatActivity {
             }
         }
         statusMood.setText("Mood: " + mood);
+
+        // Pet Mood Image Logic
+        boolean isHalfwayOrMore = totalSteps >= targetSteps * 0.5 && totalWater >= targetWater * 0.5;
+
+        if (selectedPet.equalsIgnoreCase("Dog")) {
+            if (isHalfwayOrMore) {
+                petImage.setImageResource(R.drawable.dog_normal);
+            } else {
+                petImage.setImageResource(R.drawable.dog_thirsty);
+            }
+        } else if (selectedPet.equalsIgnoreCase("Cat")) {
+            if (isHalfwayOrMore) {
+                petImage.setImageResource(R.drawable.cat_normal);
+            } else {
+                petImage.setImageResource(R.drawable.cat_thirsty);
+            }
+        } else if (selectedPet.equalsIgnoreCase("Bird")) {
+            if (isHalfwayOrMore) {
+                petImage.setImageResource(R.drawable.bird_normal);
+            } else {
+                petImage.setImageResource(R.drawable.bird_thirsty);
+            }
+        } else {
+            petImage.setImageDrawable(null);
+        }
 
         // Reward Logic
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());

@@ -1,55 +1,84 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:text="Choose Your Pet"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <RadioGroup
-        android:id="@+id/petOptions"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/petDog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dog" />
-
-        <RadioButton
-            android:id="@+id/petCat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cat" />
-
-        <RadioButton
-            android:id="@+id/petBird"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bird" />
-
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/buttonConfirmPet"
-        android:text="Confirm Selection"
-        android:layout_marginTop="24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/buttonBack"
-        android:text="Back"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-</LinearLayout>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <TextView
+            android:text="Choose Your Pet"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/petOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Dog -->
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/dog_normal"
+                android:layout_marginBottom="8dp" />
+
+            <RadioButton
+                android:id="@+id/petDog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dog" />
+
+            <!-- Cat -->
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/cat_normal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <RadioButton
+                android:id="@+id/petCat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cat" />
+
+            <!-- Bird -->
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/bird_normal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+            <RadioButton
+                android:id="@+id/petBird"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bird" />
+        </RadioGroup>
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/buttonConfirmPet"
+            android:text="Confirm Selection"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/buttonBack"
+            android:text="Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

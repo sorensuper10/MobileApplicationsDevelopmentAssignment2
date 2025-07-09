@@ -3,14 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
 
-        <!-- Points Display -->
+        <!-- Points Display at Top -->
         <TextView
             android:id="@+id/textPoints"
             android:text="Points: 0"
@@ -21,6 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <!-- Coin Image Below Points -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/coin"
+            android:layout_marginBottom="16dp" />
+
         <!-- Shop Title -->
         <TextView
             android:text="Shop Items"
@@ -30,7 +39,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!-- Shop Items -->
+        <!-- Toy Ball -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ball"
+            android:layout_marginBottom="8dp" />
         <Button
             android:id="@+id/button1"
             android:text="Toy Ball - 100 points"
@@ -38,6 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Energy Drink -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/energydrink"
+            android:layout_marginBottom="8dp" />
         <Button
             android:id="@+id/button2"
             android:text="Energy Drink - 50 points"
@@ -45,6 +65,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <!-- Pet Treat -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/food"
+            android:layout_marginBottom="8dp" />
         <Button
             android:id="@+id/button3"
             android:text="Pet Treat - 75 points"
@@ -60,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp" />
 
+        <!-- Add Coins Button -->
         <Button
             android:id="@+id/buttonAddCoins"
             android:text="Add Coins"
@@ -67,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white" />
 
         <!-- Back Button -->
         <Button
@@ -76,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
 </ScrollView>

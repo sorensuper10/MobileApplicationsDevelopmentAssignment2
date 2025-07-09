@@ -4,7 +4,8 @@
     android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
     <!-- Title -->
     <TextView
@@ -23,6 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp" />
+
+    <!-- Pet Image -->
+    <ImageView
+        android:id="@+id/statusPetImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp" />
 
     <!-- Scrollable section for status info -->
     <ScrollView
@@ -69,5 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/darker_gray"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white" />
+
 </LinearLayout>
