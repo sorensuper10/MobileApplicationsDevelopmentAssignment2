@@ -124,22 +124,29 @@ public class CheckStatusActivity extends AppCompatActivity {
         statusMood.setText("Mood: " + mood);
 
         // Pet Mood Image Logic
-        boolean isHalfwayOrMore = totalSteps >= targetSteps * 0.5 && totalWater >= targetWater * 0.5;
+        boolean isGoalReached = totalSteps >= targetSteps && totalWater >= targetWater;
+        boolean isHalfwayOrMore = totalSteps >= targetSteps * 0.5 || totalWater >= targetWater * 0.5;
 
         if (selectedPet.equalsIgnoreCase("Dog")) {
-            if (isHalfwayOrMore) {
+            if (isGoalReached) {
+                petImage.setImageResource(R.drawable.dog_happy);
+            } else if (isHalfwayOrMore) {
                 petImage.setImageResource(R.drawable.dog_normal);
             } else {
                 petImage.setImageResource(R.drawable.dog_thirsty);
             }
         } else if (selectedPet.equalsIgnoreCase("Cat")) {
-            if (isHalfwayOrMore) {
+            if (isGoalReached) {
+                petImage.setImageResource(R.drawable.cat_happy);
+            } else if (isHalfwayOrMore) {
                 petImage.setImageResource(R.drawable.cat_normal);
             } else {
                 petImage.setImageResource(R.drawable.cat_thirsty);
             }
         } else if (selectedPet.equalsIgnoreCase("Bird")) {
-            if (isHalfwayOrMore) {
+            if (isGoalReached) {
+                petImage.setImageResource(R.drawable.bird_happy);
+            } else if (isHalfwayOrMore) {
                 petImage.setImageResource(R.drawable.bird_normal);
             } else {
                 petImage.setImageResource(R.drawable.bird_thirsty);
@@ -147,6 +154,7 @@ public class CheckStatusActivity extends AppCompatActivity {
         } else {
             petImage.setImageDrawable(null);
         }
+
 
         // Reward Logic
         String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());

@@ -25,11 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp" />
 
-    <!-- Pet Image -->
+    <!-- Pet Image (Larger Size) -->
     <ImageView
         android:id="@+id/statusPetImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:scaleType="fitCenter"
         android:layout_marginBottom="16dp" />
 
     <!-- Scrollable section for status info -->
@@ -53,7 +54,7 @@
 
             <TextView
                 android:id="@+id/statusWater"
-                android:text="Water Intake: 0ml"
+                android:text="Water Intake: 0 ml"
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
